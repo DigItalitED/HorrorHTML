@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--<link rel="stylesheet" type="text/css" href="Files/styles.css">-->
+	<script src="Files/mainscript.js"></script>
+	<title>Horror SMP</title>
+</head>
+<body>
+	<div class="topbegin">
+		<ul class="header-menu">
+		  	<li class="submenu">
+		  		<a class="submenu "href="index.html">Homepage</a>
+		  	</li>
+		  	<li class="submenu">
+		  		<a class="submenu" href="player.html">Players</a>
+		  	</li>
+		  	<li class="submenu">
+		  		<a class="submenu" href="events.html">Events</a>
+		  	</li>
+		  	<li class="submenu">
+		  		<a class="submenu" href="news.html">News</a>
+		  	</li>
+		  	<li class="submenu">
+		  		<a class="submenu" href="mods.html">Mods</a>
+		  	</li>
+		  	<li class="submenu">
+		  		<a class="submenu" href="https://discord.gg/UnfcYwCGfZ">Join to Discord server!</a>
+		  	</li>
+		</ul>
+	</div>
+
+	<!-- default code -->
+
+	<h1 align="center">Server Status</h1>
+		<br>
+		
+		<h2>Modded Minecraft Server</h2>
+	
+		<div class="card">
+			<div class="icon">
+				<img src="Files/Images/Head.jpg" id="favicon"></div>
+				<div class="header">
+					<div class="image"> <img src="Files/Images/topbegin.jpg" alt="DareToDream Logo" /> </div>
+					<h2>DareToDream.zapto.org</h2>
+				</div>
+			</div>
+
+			<div class="rest">
+			</div>
+		</div>
+
+		
+		<script src="Files/serverCheck.js"></script>
+		<script>
+			var url = 'https://api.minetools.eu/ping/daretodream.zapto.org';
+			var storedText;
+			var serverArray;
+
+			fetch(url)
+				.then(function(response) {
+			    	response.text().then(function(text) {
+    					storedText = text;
+    					done();
+    				});
+  				});
+			
+			function done() {
+				storedText = "[ \n" + storedText + '\n]';
+    			serverArray = JSON.parse(storedText);
+    			console.table(serverArray[0]);
+			
+				console.table(serverArray);
+				var container = document.querySelector('.rest');
+				var html = `
+					<img src="${serverArray[0].favicon}" width="64px" height="auto">
+					<br>
+					<p>
+						Server description: ${serverArray[0].description}
+					
+					<br>
+					
+						Ping latency: ${Math.round(serverArray[0].latency)}ms
+
+					<br>
+
+						${serverArray[0].players.online}/${serverArray[0].players.max} players online
+
+					<br>
+						
+						People Online: <p class="players"></p>
+
+					<br>
+					<br>
+
+						The server is currently on ${serverArray[0].version.name} modded minecraft
+
+						check <a href="mods.html">Here</a> for the mods
+					</p>
+				`
+				container.insertAdjacentHTML('beforeend', html);
+
+				var playerPeople = document.querySelector('.players');
+
+				for(let player of serverArray[0].players.sample) {
+					var playerHtml = `
+						<p>${player.name}, </p>
+					`
+					playerPeople.insertAdjacentHTML('beforeend', playerHtml);
+				}
+			}
+		</script>
+
+		<style>
+
+			ul.header-menu{
+				list-style-type: disc;
+			}
+			
+			li.submenu{
+				display: inline-block;
+				padding: 1.2% 5%;
+			}
+			
+			a.submenu{
+				text-decoration: none;
+				color: white;
+			}
+
+			body{
+				padding: 0;
+				margin: 0;
+				background-color: black;
+			}
+			
+			div.topbegin{
+				display: flex;
+				flex-direction: column;
+				text-align: center;
+				background: #1b1b1b;
+			}
+			
+			  /* for the server check  */
+			
+			  .header {
+				position: relative;
+				z-index: 1;
+				width: 100%;
+				height: 180px;
+				box-shadow: 0 4px 3px #0002;
+				overflow: hidden;
+			  }
+			  
+			  .card img {
+				width: 100%;
+				transition: all 1s ease;
+				z-index: 0
+			  }
+			  
+			  .image {
+				width: 100%;
+				height: 180px;
+				cursor: crosshair;
+				overflow: hidden;
+			  }
+			  
+			  .image:hover img {
+				-webkit-transform: scale(1.2, 1.2);
+				transform: scale(1.2, 1.2);
+			  }
+			  
+			  .header h2 {
+				position: absolute;
+				bottom: 0;
+				margin: 0;
+				width: 100%;
+				padding: 0 10px;
+				color: #fff;
+				text-transform: uppercase;
+				pointer-events: none;
+				background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
+			  }
+			  
+			  .icon {
+				position: absolute;
+				background: #fff;
+				right: 10px;
+				top: 135px;
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+				overflow: hidden;
+				border: 3px solid #fff;
+				box-shadow: 0 4px 3px #0002;
+				z-index: 9
+			  }
+			  
+			  .rest {
+				padding: 30px 15px;
+				line-height: 30px;
+				color: white
+			  }
+		</style>
+	
+	
+</body>
+</html>
